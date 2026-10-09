@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Mode — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-screen flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <!-- Title Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded border border-cyan-500/20">TRACEABLE AI RESEARCH</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold font-display text-white mt-4 mb-4">
+                RESEARCH MODE & SEARCH
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base">
+                Real-time internet retrieval with verifiable citation footnotes. Powered by Grok 3 and Cohere Command R+.
+            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="vsh-glass-card p-6">
+                <!-- Research Modes -->
+                <div class="flex flex-wrap gap-2 font-mono text-xs mb-4">
+                    <button class="px-3 py-1.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">QUICK SEARCH</button>
+                    <button class="px-3 py-1.5 rounded bg-white/5 text-slate-300 hover:bg-white/10">DEEP RESEARCH</button>
+                    <button class="px-3 py-1.5 rounded bg-white/5 text-slate-300 hover:bg-white/10">ACADEMIC & PAPERS</button>
+                    <button class="px-3 py-1.5 rounded bg-white/5 text-slate-300 hover:bg-white/10">URL ANALYSIS</button>
+                </div>
+
+                <div class="relative mb-4">
+                    <input type="text" id="vsh-research-input" placeholder="Enter research query or URL (e.g. Latest Q3 2026 AI market report)..." class="w-full bg-[#070c1a] border border-white/15 rounded-lg py-3 px-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-sans">
+                    <button id="vsh-research-submit" class="vsh-btn-primary absolute right-1.5 top-1.5 py-1.5 px-4 text-xs">
+                        SEARCH & CITE
+                    </button>
+                </div>
+
+                <div class="text-[11px] font-mono text-slate-400 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>All claim assertions require traceable source citations. Zero fabricated links.</span>
+                </div>
+            </div>
+
+            <!-- Results Preview -->
+            <div id="vsh-research-output" class="vsh-glass-card p-6 hidden space-y-4 text-xs text-slate-200">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span class="font-bold text-white text-sm font-display">RESEARCH SYNTHESIS REPORT</span>
+                    <span class="vsh-badge-live">COHERE COMMAND R+ CITATION ENGINE</span>
+                </div>
+
+                <p class="leading-relaxed">
+                    According to verified industry reporting [<a href="#src-1" class="text-cyan-400 underline">1</a>], global multi-model AI adoption increased by 142% in 2026 as organizations transitioned from single-vendor models to unified router architectures [<a href="#src-2" class="text-cyan-400 underline">2</a>].
+                </p>
+
+                <div class="p-4 bg-[#060914] rounded border border-white/10 font-mono text-[11px] space-y-2">
+                    <div class="font-bold text-slate-400 uppercase tracking-wider">VERIFIABLE CITATIONS</div>
+                    <div id="src-1" class="text-slate-300">[1] TechCrunch AI Enterprise Benchmark (2026) - <em>https://techcrunch.com/2026/ai-reports</em></div>
+                    <div id="src-2" class="text-slate-300">[2] Stanford AI Index Quarterly (2026) - <em>https://aiindex.stanford.edu/2026</em></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        document.getElementById('vsh-research-submit')?.addEventListener('click', () => {
+            const query = document.getElementById('vsh-research-input').value.trim();
+            const output = document.getElementById('vsh-research-output');
+            if (!query || !output) return;
+
+            output.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

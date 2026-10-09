@@ -1,0 +1,6 @@
+backup_production_20261009/
+download_backup.py
+ai/assets/ai-providers/create_svgs.py
+ai/assets/generate_providers.py
+.DS_Store
+*.log

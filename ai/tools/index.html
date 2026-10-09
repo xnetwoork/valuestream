@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Directory — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-screen flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded border border-cyan-500/20">SPECIALIZED PROMPT WORKFLOWS</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold font-display text-white mt-4 mb-4">
+                AI TOOLS DIRECTORY
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base">
+                18 optimized prompt templates built directly on our multi-model infrastructure.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="vsh-tools-grid">
+            <!-- 18 Tool Cards -->
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        const AI_TOOLS = [
+            { name: "AI Writer", icon: "fa-pen-nib", desc: "Long-form editorial articles and blog generation.", path: "/ai/chat?tool=writer" },
+            { name: "Summarizer", icon: "fa-compress", desc: "Instant executive summaries for long texts & papers.", path: "/ai/chat?tool=summarizer" },
+            { name: "Translator", icon: "fa-language", desc: "Idiom-aware translation across 30+ languages.", path: "/ai/chat?tool=translator" },
+            { name: "Email Writer", icon: "fa-envelope", desc: "High-conversion sales outreach & executive emails.", path: "/ai/chat?tool=email" },
+            { name: "PDF Chat", icon: "fa-file-pdf", desc: "Upload and query PDF documents directly.", path: "/ai/files" },
+            { name: "YouTube Summarizer", icon: "fa-brands fa-youtube", desc: "Extract key takeaways and timestamps from video URLs.", path: "/ai/research?tool=youtube" },
+            { name: "Research Assistant", icon: "fa-microscope", desc: "Traceable web search with verified citations.", path: "/ai/research" },
+            { name: "SEO Assistant", icon: "fa-magnifying-glass-chart", desc: "SERP keyword clustering and meta tag optimization.", path: "/ai/chat?tool=seo" },
+            { name: "Ad Copy Generator", icon: "fa-rectangle-ad", desc: "AIDA framework copy for Google & Meta ads.", path: "/ai/chat?tool=adcopy" },
+            { name: "Product Description Generator", icon: "fa-bag-shopping", desc: "E-commerce product copy for Shopify & Amazon.", path: "/ai/chat?tool=product" },
+            { name: "Code Assistant", icon: "fa-code", desc: "Refactor TypeScript, Python, Rust & SQL queries.", path: "/ai/code" },
+            { name: "Spreadsheet Analyst", icon: "fa-file-excel", desc: "Formula creation & CSV data insights.", path: "/ai/files" },
+            { name: "Image Generator", icon: "fa-palette", desc: "FLUX 1.1 Pro & DALL·E 3 visual art engine.", path: "/ai/images" },
+            { name: "Prompt Improver", icon: "fa-wand-magic-sparkles", desc: "Expand basic prompts into high-detail megaprompts.", path: "/ai/chat?tool=improver" },
+            { name: "Social Post Generator", icon: "fa-hashtag", desc: "LinkedIn carousels, X threads, and Instagram copy.", path: "/ai/chat?tool=social" },
+            { name: "Presentation Outline", icon: "fa-chalkboard-user", desc: "Slide decks & keynote structure planning.", path: "/ai/chat?tool=presentation" },
+            { name: "Meeting Summary", icon: "fa-clipboard-check", desc: "Convert meeting transcripts into action items.", path: "/ai/chat?tool=meeting" },
+            { name: "Resume Assistant", icon: "fa-file-user", desc: "Resume tailoring & cover letter generation.", path: "/ai/chat?tool=resume" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('vsh-tools-grid');
+            if (grid) {
+                grid.innerHTML = AI_TOOLS.map(t => `
+                    <div class="vsh-glass-card p-6 flex flex-col justify-between cursor-pointer hover:border-cyan-400 transition-colors" onclick="window.location.href='${t.path}'">
+                        <div>
+                            <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg mb-4">
+                                <i class="fa-solid ${t.icon}"></i>
+                            </div>
+                            <h3 class="text-lg font-bold font-display text-white mb-2">${t.name}</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">${t.desc}</p>
+                        </div>
+                        <div class="text-[11px] font-mono text-cyan-400 font-bold flex items-center justify-between pt-3 border-t border-white/10">
+                            <span>RUN WORKFLOW</span>
+                            <span>→</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+</html>

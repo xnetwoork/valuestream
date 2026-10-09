@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" class="dark h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Model Compare — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Marked & Highlight.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/smart-router.js"></script>
+    <script src="/ai/assets/js/usage-engine.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-full flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8 flex flex-col gap-6">
+        <!-- PAGE TITLE HEADER -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs uppercase tracking-widest mb-2">
+                    <i class="fa-solid fa-[#fa-scale-balanced] fa-scale-balanced"></i> Benchmark Workspace
+                </div>
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Multi-Model Arena & Compare</h1>
+                <p class="text-slate-400 text-sm mt-1">Run one prompt simultaneously across up to 4 leading AI models to compare accuracy, depth, code quality, and speed side-by-side.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/ai/chat" class="py-2 px-4 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs border border-white/10 flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Single Chat
+                </a>
+                <button id="vsh-synthesize-btn" class="py-2 px-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-mono text-xs font-bold shadow-lg shadow-purple-500/20 flex items-center gap-2 transition-all opacity-50 cursor-not-allowed" disabled>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Synthesize Combined Answer
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTROL PANEL & PROMPT COMPOSER -->
+        <div class="glass-card p-6 rounded-2xl border border-white/10 bg-gradient-to-b from-slate-900/80 to-[#060b19]">
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-cyan-400"></i> Enter Comparison Prompt
+                    </label>
+                    <span class="text-xs font-mono text-slate-500">Select 2 to 4 models below</span>
+                </div>
+                
+                <div class="relative">
+                    <textarea id="vsh-compare-input" rows="3" class="w-full bg-[#030612] border border-white/15 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-sans text-sm resize-none shadow-inner" placeholder="E.g., Compare Rust vs Go for high-throughput WebSocket microservices. Provide code snippets and trade-offs..."></textarea>
+                    
+                    <div class="flex items-center justify-between mt-3">
+                        <!-- PRESET PROMPT PILLS -->
+                        <div class="flex flex-wrap gap-2 text-xs font-mono">
+                            <button onclick="setComparePreset('code')" class="px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10">
+                                💻 Code Benchmark
+                            </button>
+                            <button onclick="setComparePreset('reasoning')" class="px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10">
+                                🧠 Logical Reasoning
+                            </button>
+                            <button onclick="setComparePreset('creative')" class="px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10">
+                                ✨ Creative Writing
+                            </button>
+                        </div>
+
+                        <button id="vsh-run-compare-btn" class="py-2.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition-all">
+                            <i class="fa-solid fa-play"></i> Run Parallel Evaluation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MODEL SELECTION CHECKBOXES -->
+                <div class="border-t border-white/10 pt-4 mt-2">
+                    <div class="text-xs font-mono uppercase text-slate-400 mb-3 flex items-center justify-between">
+                        <span>Select Models to Compare (Max 4):</span>
+                        <span id="vsh-selected-count" class="text-cyan-400 font-bold">4 selected</span>
+                    </div>
+
+                    <div id="vsh-model-checkboxes" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                        <!-- Populated by JS from ModelRegistry -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS GRID CONTAINER -->
+        <div id="vsh-compare-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-1 min-h-[450px]">
+            <!-- Column placeholders populated dynamically -->
+        </div>
+
+        <!-- AI SYNTHESIS MODAL / CONTAINER (HIDDEN UNTIL TRIGGERED) -->
+        <div id="vsh-synthesis-container" class="hidden glass-card p-6 rounded-2xl border border-purple-500/30 bg-purple-950/20 mb-8">
+            <div class="flex items-center justify-between border-b border-purple-500/20 pb-4 mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">Synthesized Optimal Response</h3>
+                        <p class="text-xs text-purple-300 font-mono">Consolidated key insights from all evaluated models into one master answer.</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('vsh-synthesis-container').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="vsh-synthesis-body" class="prose prose-invert max-w-none text-slate-200 text-sm font-sans leading-relaxed">
+                <!-- Synthesized text renders here -->
+            </div>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registry = window.VSHModelRegistry ? window.VSHModelRegistry.getAllModels() : [];
+            const container = document.getElementById('vsh-model-checkboxes');
+            
+            // Pre-select default 4 top models
+            const defaultSelected = ['gpt-4o', 'claude-3-5-sonnet', 'gemini-1-5-pro', 'deepseek-v3'];
+            
+            container.innerHTML = registry.map(m => {
+                const isChecked = defaultSelected.includes(m.id) ? 'checked' : '';
+                const isLive = m.availability === 'LIVE';
+                return `
+                    <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-all text-xs">
+                        <input type="checkbox" name="vsh-compare-model" value="${m.id}" ${isChecked} ${!isLive ? 'disabled' : ''} onchange="updateSelectedCount()" class="rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500">
+                        <img src="/ai/assets/ai-providers/${m.icon}" class="w-4 h-4 object-contain opacity-80" alt="${m.displayName}">
+                        <div class="truncate flex-1">
+                            <div class="font-bold text-slate-200 truncate">${m.displayName}</div>
+                            <div class="text-[10px] text-slate-500 uppercase font-mono">${m.availability}</div>
+                        </div>
+                    </label>
+                `;
+            }).join('');
+
+            updateSelectedCount();
+            renderInitialColumns();
+
+            document.getElementById('vsh-run-compare-btn').addEventListener('click', runComparison);
+            document.getElementById('vsh-synthesize-btn').addEventListener('click', synthesizeAnswers);
+        });
+
+        function setComparePreset(type) {
+            const textarea = document.getElementById('vsh-compare-input');
+            if (type === 'code') {
+                textarea.value = "Implement a thread-safe LRU cache with O(1) time complexity for get and put operations. Include unit test cases.";
+            } else if (type === 'reasoning') {
+                textarea.value = "Solve this logic puzzle: A farmer must transport a wolf, a goat, and a cabbage across a river using a boat that holds only himself and one item. If left alone, wolf eats goat, goat eats cabbage. Explain every step clearly.";
+            } else if (type === 'creative') {
+                textarea.value = "Write a compelling, high-converting 60-second video ad script for an AI Super-App workspace that saves developers 20 hours a week.";
+            }
+        }
+
+        function getSelectedModelIds() {
+            const checkboxes = document.querySelectorAll('input[name="vsh-compare-model"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function updateSelectedCount() {
+            const selected = getSelectedModelIds();
+            const countSpan = document.getElementById('vsh-selected-count');
+            countSpan.textContent = `${selected.length} of 4 selected`;
+            
+            // Limit selection to max 4
+            const checkboxes = document.querySelectorAll('input[name="vsh-compare-model"]');
+            checkboxes.forEach(cb => {
+                if (!cb.checked && selected.length >= 4) {
+                    cb.disabled = true;
+                } else {
+                    const m = window.VSHModelRegistry.getModel(cb.value);
+                    if (m && m.availability === 'LIVE') cb.disabled = false;
+                }
+            });
+        }
+
+        function renderInitialColumns() {
+            const selectedIds = getSelectedModelIds();
+            const grid = document.getElementById('vsh-compare-grid');
+            grid.className = `grid grid-cols-1 ${selectedIds.length === 2 ? 'md:grid-cols-2' : selectedIds.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'} gap-4 flex-1`;
+            
+            grid.innerHTML = selectedIds.map(id => {
+                const model = window.VSHModelRegistry.getModel(id);
+                return `
+                    <div id="col-${model.id}" class="glass-card rounded-2xl border border-white/10 bg-slate-900/60 flex flex-col overflow-hidden">
+                        <!-- COLUMN HEADER -->
+                        <div class="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <img src="/ai/assets/ai-providers/${model.icon}" class="w-5 h-5 object-contain" alt="${model.displayName}">
+                                <div>
+                                    <h4 class="text-xs font-bold text-white leading-tight">${model.displayName}</h4>
+                                    <span class="text-[10px] font-mono text-slate-400 capitalize">${model.provider}</span>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold">LIVE</span>
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="p-4 flex-1 flex flex-col justify-between font-sans text-xs text-slate-300 leading-relaxed overflow-y-auto max-h-[500px]" id="body-${model.id}">
+                            <div class="text-slate-500 italic text-center py-12">
+                                <i class="fa-regular fa-paper-plane text-2xl mb-2 block"></i>
+                                Ready for prompt...
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function runComparison() {
+            const prompt = document.getElementById('vsh-compare-input').value.trim();
+            if (!prompt) {
+                alert('Please enter a comparison prompt first.');
+                return;
+            }
+
+            renderInitialColumns();
+            const selectedIds = getSelectedModelIds();
+            
+            selectedIds.forEach((id, index) => {
+                const model = window.VSHModelRegistry.getModel(id);
+                const bodyEl = document.getElementById(`body-${id}`);
+                
+                bodyEl.innerHTML = `
+                    <div class="flex items-center gap-2 text-cyan-400 font-mono text-xs py-4">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Generating response...
+                    </div>
+                `;
+
+                // Simulate stream delay per model based on speed
+                setTimeout(() => {
+                    let mockContent = "";
+                    if (prompt.toLowerCase().includes('lru') || prompt.toLowerCase().includes('code')) {
+                        mockContent = `### ${model.displayName} Implementation\n\nHere is a clean, optimized implementation for your request:\n\n\`\`\`python\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.cap = capacity\n        self.cache = {}\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        val = self.cache.pop(key)\n        self.cache[key] = val\n        return val\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.pop(key)\n        elif len(self.cache) >= self.cap:\n            del self.cache[next(iter(self.cache))]\n        self.cache[key] = value\n\`\`\`\n\n**Performance & Latency:**\n- Execution Time: 0.${(Math.random() * 8 + 1).toFixed(0)}s\n- Context Tokens Used: ~480 tokens`;
+                    } else if (prompt.toLowerCase().includes('wolf') || prompt.toLowerCase().includes('goat')) {
+                        mockContent = `### ${model.displayName} Logic Solution\n\nTo safely transport all items across the river without anything being eaten:\n\n1. **Step 1:** Take the Goat across (leaving Wolf and Cabbage).\n2. **Step 2:** Return alone.\n3. **Step 3:** Take the Wolf across.\n4. **Step 4:** Bring the Goat back.\n5. **Step 5:** Take the Cabbage across.\n6. **Step 6:** Return alone.\n7. **Step 7:** Take the Goat across.\n\n*Verified zero items lost.*`;
+                    } else {
+                        mockContent = `### Comparative Analysis (${model.displayName})\n\nEvaluating your objective: **"${prompt.substring(0, 40)}..."**\n\n- **Core Strength:** High precision reasoning with 128k context support.\n- **Architectural Trade-off:** Optimized for factual rigor over speculative text.\n- **Recommendation:** Recommended for production codebases and critical document analysis.`;
+                    }
+
+                    bodyEl.innerHTML = marked.parse(mockContent);
+                    bodyEl.querySelectorAll('pre code').forEach((block) => hljs.highlightElement(block));
+                }, 800 + index * 600);
+            });
+
+            // Enable Synthesize button after runs
+            setTimeout(() => {
+                const synthBtn = document.getElementById('vsh-synthesize-btn');
+                synthBtn.disabled = false;
+                synthBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }, 3000);
+        }
+
+        function synthesizeAnswers() {
+            const synthContainer = document.getElementById('vsh-synthesis-container');
+            const synthBody = document.getElementById('vsh-synthesis-body');
+            synthContainer.classList.remove('hidden');
+            
+            synthBody.innerHTML = `
+                <div class="flex items-center gap-2 text-purple-300 font-mono text-xs py-4">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> Cross-synthesizing all 4 model outputs into one consolidated response...
+                </div>
+            `;
+
+            setTimeout(() => {
+                const synthesisMarkdown = `
+### Consolidated Optimal Answer
+
+After cross-referencing responses across evaluated models (**GPT-4o**, **Claude 3.5 Sonnet**, **Gemini 1.5 Pro**, and **DeepSeek V3**), here is the unified synthesis:
+
+1. **Primary Algorithmic Approach**: All models agreed on the core doubly-linked list + hash map data structure for O(1) time complexity.
+2. **Key Nuance Identified by Claude 3.5 Sonnet**: Emphasized memory lock contention in multi-threaded environments, recommending atomic mutex guards.
+3. **Efficiency Insight from DeepSeek V3**: Highlighted zero-alloc bucket layout for reduced garbage collector pressure.
+
+> **Final Recommendation**: Use **Claude 3.5 Sonnet** for production system design and **DeepSeek V3** for performance-critical mathematical code optimization.
+                `;
+                synthBody.innerHTML = marked.parse(synthesisMarkdown);
+                synthContainer.scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

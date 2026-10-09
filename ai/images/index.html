@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image AI Studio — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/usage-engine.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-screen flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <!-- Title Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-mono uppercase tracking-widest text-magenta-400 bg-pink-500/10 px-3 py-1 rounded border border-pink-500/20">IMAGE AI STUDIO</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold font-display text-white mt-4 mb-4">
+                ONE PROMPT.<br>
+                <span class="vsh-text-gradient-purple">THE WORLD'S LEADING IMAGE ENGINES.</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base">
+                Create photorealistic renders, vector design assets, and posters using FLUX 1.1 Pro, DALL·E 3, and Recraft V3.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- CONTROLS PANEL (LEFT 5 COLS) -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="vsh-glass-card p-6 space-y-5">
+                    
+                    <!-- Prompt Area -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-xs font-mono font-bold uppercase text-slate-300">PROMPT</label>
+                            <label class="flex items-center gap-2 cursor-pointer text-xs font-mono text-cyan-400">
+                                <input type="checkbox" id="vsh-img-enhance-toggle" checked class="accent-cyan-500">
+                                <span>ENHANCE PROMPT</span>
+                            </label>
+                        </div>
+                        <textarea id="vsh-img-prompt" rows="3" placeholder="Describe the image you want to generate in detail..." class="w-full bg-[#070c1a] border border-white/15 rounded-lg p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-sans"></textarea>
+                    </div>
+
+                    <!-- Model Selection -->
+                    <div>
+                        <label class="text-xs font-mono font-bold uppercase text-slate-300 block mb-2">VISUAL ENGINE</label>
+                        <select id="vsh-img-model-select" class="w-full bg-[#070c1a] border border-white/15 rounded-lg p-2.5 text-xs text-white font-mono focus:outline-none focus:border-cyan-400">
+                            <option value="flux-1-1-pro">FLUX 1.1 Pro Ultra (Black Forest Labs) - SOTA Photorealism</option>
+                            <option value="dall-e-3">DALL·E 3 HD (OpenAI) - Creative Illustration</option>
+                            <option value="recraft-v3">Recraft V3 (Recraft) - Vector Art & Brand Graphics</option>
+                        </select>
+                    </div>
+
+                    <!-- Presets -->
+                    <div>
+                        <label class="text-xs font-mono font-bold uppercase text-slate-300 block mb-2">VISUAL PRESET</label>
+                        <div class="grid grid-cols-3 gap-2 font-mono text-[11px]" id="vsh-img-presets">
+                            <button onclick="selectImgPreset('PHOTOREAL')" class="p-2 rounded bg-white/5 border border-cyan-500/40 text-cyan-300 font-bold active">PHOTOREAL</button>
+                            <button onclick="selectImgPreset('DESIGN')" class="p-2 rounded bg-white/5 border border-white/10 text-slate-300">DESIGN</button>
+                            <button onclick="selectImgPreset('POSTER')" class="p-2 rounded bg-white/5 border border-white/10 text-slate-300">POSTER</button>
+                            <button onclick="selectImgPreset('TEXT IN IMAGE')" class="p-2 rounded bg-white/5 border border-white/10 text-slate-300">TEXT IN IMAGE</button>
+                            <button onclick="selectImgPreset('PRODUCT')" class="p-2 rounded bg-white/5 border border-white/10 text-slate-300">PRODUCT</button>
+                            <button onclick="selectImgPreset('VECTOR')" class="p-2 rounded bg-white/5 border border-white/10 text-slate-300">VECTOR</button>
+                        </div>
+                    </div>
+
+                    <!-- Aspect Ratio & Count -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs font-mono font-bold uppercase text-slate-300 block mb-2">ASPECT RATIO</label>
+                            <select id="vsh-img-aspect" class="w-full bg-[#070c1a] border border-white/15 rounded-lg p-2.5 text-xs text-white font-mono">
+                                <option value="1:1">1:1 (Square)</option>
+                                <option value="16:9" selected>16:9 (Landscape)</option>
+                                <option value="9:16">9:16 (Story / Reel)</option>
+                                <option value="4:5">4:5 (Social Post)</option>
+                                <option value="21:9">21:9 (Cinematic)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs font-mono font-bold uppercase text-slate-300 block mb-2">COUNT</label>
+                            <select id="vsh-img-count" class="w-full bg-[#070c1a] border border-white/15 rounded-lg p-2.5 text-xs text-white font-mono">
+                                <option value="1">1 Image (200 Credits)</option>
+                                <option value="2">2 Images (400 Credits)</option>
+                                <option value="4">4 Images (800 Credits)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="vsh-img-generate-btn" class="vsh-btn-primary w-full py-3.5 text-xs uppercase tracking-wider font-mono font-bold">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> GENERATE IMAGES
+                    </button>
+                </div>
+            </div>
+
+            <!-- GALLERY & OUTPUT DISPLAY (RIGHT 7 COLS) -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="vsh-glass-card p-6">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-6">
+                        <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">GENERATED GALLERY</span>
+                        <span class="text-[11px] font-mono text-slate-400">High-Resolution Outputs</span>
+                    </div>
+
+                    <div id="vsh-img-gallery" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="aspect-video bg-[#070c1a] rounded-lg border border-white/10 flex items-center justify-center p-6 text-center text-slate-500 font-mono text-xs">
+                            Enter a prompt to generate artwork
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        let selectedPreset = 'PHOTOREAL';
+
+        function selectImgPreset(name) {
+            selectedPreset = name;
+            document.querySelectorAll('#vsh-img-presets button').forEach(btn => {
+                btn.classList.remove('border-cyan-500/40', 'text-cyan-300', 'font-bold');
+                btn.classList.add('border-white/10', 'text-slate-300');
+            });
+            event.target.classList.add('border-cyan-500/40', 'text-cyan-300', 'font-bold');
+        }
+
+        document.getElementById('vsh-img-generate-btn')?.addEventListener('click', () => {
+            const prompt = document.getElementById('vsh-img-prompt').value.trim();
+            const gallery = document.getElementById('vsh-img-gallery');
+            const modelId = document.getElementById('vsh-img-model-select').value;
+            const aspect = document.getElementById('vsh-img-aspect').value;
+
+            if (!prompt || !gallery) return;
+
+            const model = MODEL_REGISTRY.find(m => m.id === modelId) || MODEL_REGISTRY[0];
+
+            if (typeof ValueStreamUsageEngine !== 'undefined') {
+                ValueStreamUsageEngine.recordExecution(model, 'image', { count: 1 });
+            }
+
+            gallery.innerHTML = `
+                <div class="col-span-full aspect-video bg-[#070c1a] rounded-lg border border-cyan-500/30 flex flex-col items-center justify-center p-6 text-center text-cyan-400 font-mono text-xs space-y-3">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
+                    <p>Generating artwork with ${model.displayName} (${aspect})...</p>
+                </div>
+            `;
+
+            setTimeout(() => {
+                gallery.innerHTML = `
+                    <div class="vsh-glass-card overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition-transform" alt="Generated Artwork">
+                        <div class="p-3 bg-[#060914] flex items-center justify-between text-[11px] font-mono">
+                            <span class="text-slate-300 truncate max-w-[200px]">${escapeHtml(prompt)}</span>
+                            <a href="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600" target="_blank" download class="text-cyan-400 font-bold hover:underline"><i class="fa-solid fa-download"></i> HD</a>
+                        </div>
+                    </div>
+                `;
+            }, 1800);
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

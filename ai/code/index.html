@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="dark min-h-screen flex flex-col">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Workspace — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-screen flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex flex-col">
+        <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+            <div>
+                <span class="text-xs font-mono uppercase tracking-widest text-emerald-400">FULL-STACK CODE ENGINE</span>
+                <h1 class="text-2xl font-bold font-display text-white mt-1">AI CODE WORKSPACE</h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <select id="vsh-code-model-select" class="bg-[#070c1a] border border-white/15 rounded-lg px-3 py-1.5 text-xs font-mono text-white">
+                    <option value="claude-3-5-sonnet">Claude 3.5 Sonnet (Anthropic)</option>
+                    <option value="o3-mini">OpenAI o3-mini Reasoning</option>
+                    <option value="qwen-2-5-coder-32b">Qwen 2.5 Coder 32B</option>
+                    <option value="codestral-2501">Codestral 25.01 (Mistral)</option>
+                </select>
+                <span class="vsh-badge-live">ISOLATED SANDBOX</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+            <!-- INPUT PANEL -->
+            <div class="lg:col-span-5 flex flex-col space-y-4">
+                <div class="vsh-glass-card p-4 flex-1 flex flex-col">
+                    <div class="flex items-center justify-between mb-3 font-mono text-xs">
+                        <span class="text-slate-300 font-bold">SOURCE / PROMPT</span>
+                        <div class="flex gap-1">
+                            <button onclick="setTaskMode('generate')" class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">Generate</button>
+                            <button onclick="setTaskMode('refactor')" class="px-2 py-0.5 rounded bg-white/5 text-slate-400">Refactor</button>
+                            <button onclick="setTaskMode('debug')" class="px-2 py-0.5 rounded bg-white/5 text-slate-400">Debug</button>
+                        </div>
+                    </div>
+                    <textarea id="vsh-code-input" rows="12" placeholder="Write requirements or paste code snippet to refactor/debug..." class="w-full flex-1 bg-[#060914] border border-white/15 rounded p-3 font-mono text-xs text-white focus:outline-none focus:border-cyan-400"></textarea>
+                    
+                    <button id="vsh-code-run-btn" class="vsh-btn-primary mt-4 py-2.5 text-xs font-mono font-bold uppercase">
+                        <i class="fa-solid fa-code"></i> RUN CODE ENGINE
+                    </button>
+                </div>
+            </div>
+
+            <!-- OUTPUT DISPLAY PANEL -->
+            <div class="lg:col-span-7 flex flex-col">
+                <div class="vsh-glass-card p-4 flex-1 flex flex-col bg-[#02050c]">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3 font-mono text-xs">
+                        <span class="text-slate-300 font-bold">GENERATED OUTPUT</span>
+                        <button onclick="copyCodeOutput()" class="text-cyan-400 hover:underline"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                    <pre class="flex-1 overflow-auto p-4 rounded bg-[#060914] border border-white/10"><code id="vsh-code-output" class="language-typescript">// Generated code output will render here with full syntax highlighting
+function helloWorld(): string {
+    return "ValueStreamHub AI Code Engine Ready";
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        document.getElementById('vsh-code-run-btn')?.addEventListener('click', () => {
+            const input = document.getElementById('vsh-code-input').value.trim();
+            const output = document.getElementById('vsh-code-output');
+            if (!input || !output) return;
+
+            output.textContent = `// Processing with ${document.getElementById('vsh-code-model-select').value}...\n\nexport async function executeTask() {\n    console.log("Analyzing logic for: ${input.replace(/"/g, '\\"')}");\n    return { success: true, timestamp: Date.now() };\n}`;
+            if (window.hljs) hljs.highlightElement(output);
+        });
+
+        function copyCodeOutput() {
+            const output = document.getElementById('vsh-code-output');
+            if (output && navigator.clipboard) {
+                navigator.clipboard.writeText(output.textContent);
+                alert('Code copied to clipboard!');
+            }
+        }
+
+        function setTaskMode(mode) {}
+    </script>
+</body>
+</html>

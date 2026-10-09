@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Intelligence — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-screen flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-mono uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded border border-amber-500/20">DOCUMENT INTELLIGENCE</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold font-display text-white mt-4 mb-4">
+                ANALYZE DOCUMENTS & DATA
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base">
+                Upload PDF, DOCX, CSV, XLSX, or TXT. Summarize, extract tables, and chat with 2,000,000 token context window.
+            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto space-y-8">
+            <!-- Drag & Drop Upload Zone -->
+            <div class="vsh-glass-card p-10 border-2 border-dashed border-cyan-500/40 text-center hover:border-cyan-400 transition-colors cursor-pointer">
+                <i class="fa-solid fa-cloud-arrow-up text-4xl text-cyan-400 mb-4"></i>
+                <h3 class="text-lg font-bold font-display text-white mb-2">Drag & Drop Files Here</h3>
+                <p class="text-xs text-slate-400 font-mono mb-4">Supports PDF, DOCX, TXT, CSV, XLSX, and PNG/JPG images (Max 50MB per file)</p>
+                <input type="file" id="vsh-file-selector" class="hidden" multiple accept=".pdf,.docx,.txt,.csv,.xlsx,image/*">
+                <button onclick="document.getElementById('vsh-file-selector').click()" class="vsh-btn-primary py-2 px-6 text-xs uppercase font-mono">
+                    CHOOSE FILES
+                </button>
+            </div>
+
+            <!-- Upload Retention & Security Notice -->
+            <div class="p-4 rounded-lg bg-[#060914] border border-white/10 text-xs text-slate-400 font-mono flex items-center justify-between">
+                <span class="flex items-center gap-2"><i class="fa-solid fa-lock text-cyan-400"></i> Secure ephemeral processing. Temporary files are auto-purged after 24 hours.</span>
+                <span class="text-slate-500">Executable files (.exe, .sh) rejected</span>
+            </div>
+
+            <!-- Active Document Workspace -->
+            <div class="vsh-glass-card p-6">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                    <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">DOCUMENT WORKSPACE ACTIONS</span>
+                    <span class="vsh-badge-live">GEMINI 2.5 PRO 2M ENGINE</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+                    <button class="p-3 rounded bg-white/5 border border-white/10 hover:border-cyan-400 text-slate-200 text-center">
+                        <i class="fa-solid fa-file-contract text-cyan-400 block text-lg mb-1"></i> Summarize
+                    </button>
+                    <button class="p-3 rounded bg-white/5 border border-white/10 hover:border-cyan-400 text-slate-200 text-center">
+                        <i class="fa-solid fa-table text-purple-400 block text-lg mb-1"></i> Extract Tables
+                    </button>
+                    <button class="p-3 rounded bg-white/5 border border-white/10 hover:border-cyan-400 text-slate-200 text-center">
+                        <i class="fa-solid fa-code-compare text-emerald-400 block text-lg mb-1"></i> Compare Files
+                    </button>
+                    <button class="p-3 rounded bg-white/5 border border-white/10 hover:border-cyan-400 text-slate-200 text-center">
+                        <i class="fa-solid fa-chart-pie text-amber-400 block text-lg mb-1"></i> Analyze CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+</body>
+</html>

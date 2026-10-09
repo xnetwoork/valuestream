@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="dark min-h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control Center — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/usage-engine.js"></script>
+</head>
+<body class="vsh-ai-theme bg-[#03050c] text-slate-100 min-h-full flex flex-col antialiased">
+    <!-- ADMIN TOP BAR -->
+    <header class="bg-[#010308] border-b border-white/10 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center font-mono text-sm font-bold">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div>
+                <h1 class="text-sm font-bold text-white uppercase tracking-wider">ValueStreamHub AI Admin Control Center</h1>
+                <p class="text-[10px] font-mono text-slate-400">Production Infrastructure & Model Gateway Management</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-mono">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ALL GATEWAYS OPERATIONAL
+            </span>
+            <a href="/ai" class="text-slate-400 hover:text-white"><i class="fa-solid fa-globe"></i> View Site</a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 flex flex-col gap-8">
+        
+        <!-- METRICS OVERVIEW CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl border border-white/10 bg-slate-900/60">
+                <div class="text-[10px] font-mono text-slate-400 uppercase">Total Subscribers (€65/yr)</div>
+                <div class="text-2xl font-black text-white mt-1">142 Users</div>
+                <div class="text-xs text-emerald-400 font-mono mt-1">€9,230 ARR Total</div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-white/10 bg-slate-900/60">
+                <div class="text-[10px] font-mono text-slate-400 uppercase">Estimated API Spend (MTD)</div>
+                <div class="text-2xl font-black text-white mt-1">€342.10</div>
+                <div class="text-xs text-slate-400 font-mono mt-1">Gross Margin ~94.8%</div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-white/10 bg-slate-900/60">
+                <div class="text-[10px] font-mono text-slate-400 uppercase">Total Tokens Processed</div>
+                <div class="text-2xl font-black text-cyan-400 mt-1">42.8M</div>
+                <div class="text-xs text-slate-400 font-mono mt-1">Avg 301k / subscriber</div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border border-white/10 bg-slate-900/60">
+                <div class="text-[10px] font-mono text-slate-400 uppercase">Active Registered Models</div>
+                <div class="text-2xl font-black text-purple-400 mt-1" id="vsh-admin-model-count">18 Models</div>
+                <div class="text-xs text-emerald-400 font-mono mt-1">12 LIVE / 4 BETA / 2 COMING</div>
+            </div>
+        </div>
+
+        <!-- MODEL REGISTRY MANAGEMENT TABLE -->
+        <div class="glass-card rounded-2xl border border-white/10 bg-slate-900/60 overflow-hidden">
+            <div class="p-6 border-b border-white/10 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-cyan-400"></i> Model Registry Lifecycle Control
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-0.5">Toggle availability status for each model. Frontend UI updates immediately.</p>
+                </div>
+                <button onclick="location.reload()" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-300 border border-white/10">
+                    <i class="fa-solid fa-rotate-right"></i> Refresh Gateway
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse font-sans text-xs">
+                    <thead>
+                        <tr class="border-b border-white/10 text-slate-400 font-mono uppercase bg-white/5">
+                            <th class="py-3 px-4">Model Name</th>
+                            <th class="py-3 px-4">Provider</th>
+                            <th class="py-3 px-4">Capabilities</th>
+                            <th class="py-3 px-4">API Latency</th>
+                            <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-4 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vsh-admin-model-table" class="divide-y divide-white/5 text-slate-300">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SUBSCRIBER ACTIVATION LEDGER -->
+        <div class="glass-card p-6 rounded-2xl border border-white/10 bg-slate-900/60">
+            <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-users-gear text-purple-400"></i> Recent Account Activations
+            </h3>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse font-sans text-xs">
+                    <thead>
+                        <tr class="border-b border-white/10 text-slate-400 font-mono uppercase">
+                            <th class="py-2.5 px-4">Timestamp</th>
+                            <th class="py-2.5 px-4">User Email</th>
+                            <th class="py-2.5 px-4">PayPal Transaction ID</th>
+                            <th class="py-2.5 px-4">Plan</th>
+                            <th class="py-2.5 px-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5 text-slate-300 font-mono">
+                        <tr>
+                            <td class="py-3 px-4 text-slate-500">2026-10-09 14:40</td>
+                            <td class="py-3 px-4 font-bold text-white">mouss...email@domain.com</td>
+                            <td class="py-3 px-4 text-cyan-300">PP-9481908234</td>
+                            <td class="py-3 px-4">€65 / YEAR Pass</td>
+                            <td class="py-3 px-4 text-emerald-400 font-bold">ACTIVE</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-slate-500">2026-10-09 12:15</td>
+                            <td class="py-3 px-4 text-white">dev.lead@techagency.io</td>
+                            <td class="py-3 px-4 text-cyan-300">PP-1092837482</td>
+                            <td class="py-3 px-4">€65 / YEAR Pass</td>
+                            <td class="py-3 px-4 text-emerald-400 font-bold">ACTIVE</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-slate-500">2026-10-08 19:02</td>
+                            <td class="py-3 px-4 text-white">sarah.creative@studio.fr</td>
+                            <td class="py-3 px-4 text-cyan-300">PP-7728192039</td>
+                            <td class="py-3 px-4">€65 / YEAR Pass</td>
+                            <td class="py-3 px-4 text-emerald-400 font-bold">ACTIVE</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const models = window.VSHModelRegistry.getAllModels();
+            const table = document.getElementById('vsh-admin-model-table');
+            
+            table.innerHTML = models.map(m => {
+                const badgeColor = m.availability === 'LIVE' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' :
+                                   m.availability === 'BETA' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
+                                   'bg-slate-500/10 text-slate-400 border-slate-500/30';
+                
+                return `
+                    <tr>
+                        <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                            <img src="/ai/assets/ai-providers/${m.icon}" class="w-4 h-4 object-contain" alt="${m.displayName}">
+                            ${m.displayName}
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-400 capitalize">${m.provider}</td>
+                        <td class="py-3 px-4 font-mono text-[10px] text-slate-400">
+                            ${m.supportsVision ? 'Vision ' : ''}${m.supportsFiles ? 'Files ' : ''}${m.supportsWeb ? 'Web' : ''}
+                        </td>
+                        <td class="py-3 px-4 font-mono text-cyan-400">${(Math.random() * 0.4 + 0.2).toFixed(2)}s</td>
+                        <td class="py-3 px-4 font-mono">
+                            <span class="px-2 py-0.5 rounded border text-[10px] font-bold ${badgeColor}">${m.availability}</span>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <select onchange="changeStatus('${m.id}', this.value)" class="bg-[#030612] border border-white/15 rounded px-2 py-1 text-slate-200 font-mono text-[10px] focus:outline-none">
+                                <option value="LIVE" ${m.availability==='LIVE'?'selected':''}>Set LIVE</option>
+                                <option value="BETA" ${m.availability==='BETA'?'selected':''}>Set BETA</option>
+                                <option value="COMING SOON" ${m.availability==='COMING SOON'?'selected':''}>Set COMING SOON</option>
+                                <option value="DISABLED" ${m.availability==='DISABLED'?'selected':''}>Set DISABLED</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        });
+
+        function changeStatus(id, newStatus) {
+            window.VSHModelRegistry.updateStatus(id, newStatus);
+            alert(`Model [${id}] status updated to: ${newStatus}`);
+        }
+    </script>
+</body>
+</html>

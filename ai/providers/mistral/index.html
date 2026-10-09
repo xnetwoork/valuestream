@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" class="dark min-h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistral AI Models — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-full flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-12 flex flex-col gap-10">
+        <!-- PROVIDER HERO -->
+        <div class="glass-card p-8 md:p-12 rounded-3xl border border-white/10 bg-gradient-to-b from-slate-900 to-[#060b19] flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="space-y-4 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs uppercase tracking-widest">
+                    <img src="/ai/assets/ai-providers/mistral.svg" class="w-4 h-4 object-contain" alt="Mistral AI">
+                    INTEGRATED PROVIDER
+                </div>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight">Mistral AI Models on ValueStreamHub AI</h1>
+                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                    Access Mistral Large & Codestral within your unified €65/Year workspace.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <a href="/ai/chat?model=mistral-large" class="py-3 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-cyan-500/20">
+                        Launch Chat with Mistral AI
+                    </a>
+                    <a href="https://paypal.me/valuestreamhubstore/65EUR" target="_blank" class="py-3 px-6 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 font-mono text-xs font-bold uppercase tracking-wider border border-white/15">
+                        Get €65/Year All-Access Pass
+                    </a>
+                </div>
+            </div>
+            <div class="w-32 h-32 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center p-6 shadow-2xl">
+                <img src="/ai/assets/ai-providers/mistral.svg" class="w-full h-full object-contain filter invert" alt="Mistral AI Marks">
+            </div>
+        </div>
+
+        <!-- MODEL LIST GRID FOR THIS PROVIDER -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-bold text-white font-mono uppercase tracking-wider">Available Mistral AI Models in Registry</h2>
+            <div id="vsh-provider-models-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div class="text-center border-t border-white/10 pt-6">
+            <p class="text-[11px] text-slate-500 font-mono">
+                ValueStreamHub AI is an independent multi-model interface. Provider names, logos, and trademarks belong strictly to Mistral AI.
+            </p>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const models = window.VSHModelRegistry.getModelsByProvider('mistral');
+            const grid = document.getElementById('vsh-provider-models-grid');
+            
+            if (!models || models.length === 0) {
+                grid.innerHTML = '<div class="col-span-3 text-center py-8 text-slate-400 font-mono text-xs">Models configured and initializing for Mistral AI...</div>';
+                return;
+            }
+
+            grid.innerHTML = models.map(m => `
+                <div class="glass-card p-5 rounded-2xl border border-white/10 bg-slate-900/60 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold text-white font-mono">${m.displayName}</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold">${m.availability}</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">${m.description}</p>
+                        <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-400 mb-4">
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">${m.contextWindow} Context</span>
+                            ${m.supportsVision ? '<span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">Vision</span>' : ''}
+                            ${m.supportsFiles ? '<span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300">Files</span>' : ''}
+                        </div>
+                    </div>
+                    <a href="/ai/chat?model=${m.id}" class="w-full py-2 rounded-lg bg-white/5 hover:bg-white/10 text-center text-xs font-mono text-cyan-300 border border-white/10 block">
+                        Use Model &rarr;
+                    </a>
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+</html>

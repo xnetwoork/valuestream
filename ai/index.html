@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ValueStreamHub AI — Every Leading AI. One Workspace. (€65/Year)</title>
+    <meta name="description" content="Access OpenAI, Anthropic, Google, xAI, DeepSeek, Mistral, Meta & NVIDIA models in one unified AI Super-App workspace for chat, reasoning, research, image, video & coding.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/smart-router.js"></script>
+    <script src="/ai/assets/js/usage-engine.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-screen flex flex-col antialiased">
+    <!-- Header Placeholder -->
+    <div id="vsh-ai-header"></div>
+
+    <!-- 01 HERO SECTION -->
+    <section class="relative min-h-[88vh] flex items-center justify-center pt-12 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <canvas id="vsh-constellation-canvas"></canvas>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            
+            <!-- Category Badge -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-8 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span>VALUESTREAMHUB AI SUPER-APP</span>
+                <span class="text-slate-500">|</span>
+                <span class="text-slate-300">ANNUAL ACCESS €65/YR</span>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold font-display tracking-tight text-white mb-6 leading-tight">
+                EVERY LEADING AI.<br>
+                <span class="vsh-text-gradient-cyan">ONE WORKSPACE.</span>
+            </h1>
+
+            <!-- Subheading -->
+            <p class="max-w-2xl mx-auto text-base sm:text-xl text-slate-300 mb-10 leading-relaxed font-sans font-normal">
+                Chat, reason, research, code, analyze documents, create images and generate video using leading AI models from one unified workspace.
+            </p>
+
+            <!-- CTA Cluster -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+                <a href="https://paypal.me/valuestreamhubstore/65EUR" target="_blank" rel="noopener" class="vsh-btn-primary w-full sm:w-auto py-4 px-8 text-sm uppercase tracking-wider">
+                    <i class="fa-solid fa-bolt text-yellow-300"></i>
+                    <span>GET ALL AI — €65/YEAR</span>
+                </a>
+                <a href="/ai/models" class="vsh-btn-secondary w-full sm:w-auto py-4 px-8 text-sm uppercase tracking-wider">
+                    <span>EXPLORE 18+ LIVE MODELS</span>
+                </a>
+            </div>
+
+            <!-- Price Callout -->
+            <div class="inline-flex items-center gap-4 text-xs font-mono text-slate-400 bg-slate-900/80 px-4 py-2 rounded-lg border border-white/10">
+                <span class="text-white font-bold text-sm">€65 / YEAR</span>
+                <span class="text-slate-500">•</span>
+                <span>€5.42/month equivalent (billed annually)</span>
+                <span class="text-slate-500">•</span>
+                <a href="/ai/pricing" class="text-cyan-400 hover:underline">Fair-Use Policy Applies</a>
+            </div>
+
+            <!-- Provider Badge Grid -->
+            <div class="mt-14 pt-8 border-t border-white/10">
+                <p class="text-xs font-mono uppercase tracking-widest text-slate-400 mb-6">INTEGRATED LEADING AI LABS</p>
+                <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 opacity-80">
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/openai.svg" class="w-5 h-5 invert" alt="OpenAI"> OpenAI</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/anthropic.svg" class="w-5 h-5 invert" alt="Anthropic"> Anthropic</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/google.svg" class="w-5 h-5" alt="Google"> Google AI</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/xai.svg" class="w-5 h-5 invert" alt="xAI"> xAI Grok</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/deepseek.svg" class="w-5 h-5 text-blue-400" alt="DeepSeek"> DeepSeek</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/mistral.svg" class="w-5 h-5" alt="Mistral"> Mistral</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/meta.svg" class="w-5 h-5" alt="Meta"> Meta Llama</div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-300"><img src="/ai/assets/ai-providers/nvidia.svg" class="w-5 h-5" alt="NVIDIA"> NVIDIA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 PROVIDER MARQUEE -->
+    <div class="w-full bg-[#02050c] py-6 border-y border-white/10 overflow-hidden">
+        <div class="flex whitespace-nowrap animate-marquee gap-12 text-slate-400 font-mono text-xs items-center uppercase tracking-widest">
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/openai.svg" class="w-4 h-4 invert"> GPT-4o OMNI</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/claude.svg" class="w-4 h-4 invert"> CLAUDE 3.5 SONNET</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/gemini.svg" class="w-4 h-4"> GEMINI 2.5 PRO 2M</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/deepseek.svg" class="w-4 h-4"> DEEPSEEK R1 REASONER</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/xai.svg" class="w-4 h-4 invert"> GROK 3 SEARCH</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/openai.svg" class="w-4 h-4 invert"> FLUX 1.1 PRO ULTRA</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/nvidia.svg" class="w-4 h-4"> KLING 1.5 1080P VIDEO</span>
+            <span>•</span>
+            <span class="flex items-center gap-2"><img src="/ai/assets/ai-providers/mistral.svg" class="w-4 h-4"> CODESTRAL 25.01</span>
+            <span>•</span>
+        </div>
+    </div>
+
+    <!-- 03 MODEL REGISTRY & PICKER INTERACTIVE DEMO -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded border border-cyan-500/20">CENTRAL MODEL REGISTRY</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white mt-4 mb-4">THE RIGHT MODEL FOR EVERY TASK</h2>
+            <p class="text-slate-400 text-sm sm:text-base">Filter live verified models across reasoning, speed, coding, research, image, and video modalities.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="vsh-featured-models-grid">
+            <!-- Populated dynamically from MODEL_REGISTRY -->
+        </div>
+
+        <div class="text-center mt-10">
+            <a href="/ai/models" class="vsh-btn-secondary py-3 px-8 text-xs font-mono uppercase tracking-wider">
+                VIEW FULL MODEL REGISTRY (18+ MODELS) →
+            </a>
+        </div>
+    </section>
+
+    <!-- 04 MULTI-MODEL COMPARE DEMO -->
+    <section class="py-20 bg-[#02050e] border-y border-white/10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-purple-400 bg-purple-500/10 px-3 py-1 rounded border border-purple-500/20">ONE PROMPT — MULTIPLE BRAINS</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white mt-4 mb-6 leading-tight">
+                        COMPARE LEADING MODELS SIDE-BY-SIDE.
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                        Never rely on a single AI answer again. Send one prompt simultaneously to GPT-4o, Claude 3.5 Sonnet, Gemini 2.5 Pro, and DeepSeek R1. Synthesize the ultimate answer instantly.
+                    </p>
+
+                    <div class="space-y-4 font-mono text-xs">
+                        <div class="flex items-center gap-3 p-3 rounded bg-white/5 border border-white/10">
+                            <i class="fa-solid fa-check text-cyan-400"></i>
+                            <span class="text-slate-200">Side-by-side 4-model comparison view</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded bg-white/5 border border-white/10">
+                            <i class="fa-solid fa-check text-cyan-400"></i>
+                            <span class="text-slate-200">AI Consensus Synthesis Engine</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded bg-white/5 border border-white/10">
+                            <i class="fa-solid fa-check text-cyan-400"></i>
+                            <span class="text-slate-200">Zero duplicate subscription costs</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <a href="/ai/compare" class="vsh-btn-primary py-3 px-6 text-xs uppercase tracking-wider">
+                            TRY MULTI-MODEL COMPARE →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Preview Cards -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="vsh-glass-card p-4">
+                        <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                            <span class="text-xs font-bold text-white flex items-center gap-2"><img src="/ai/assets/ai-providers/openai.svg" class="w-3.5 h-3.5 invert"> GPT-4o</span>
+                            <span class="vsh-badge-live">LIVE</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-relaxed font-mono">"Architectural plan: Use a decoupled microservices event bus..."</p>
+                    </div>
+
+                    <div class="vsh-glass-card p-4">
+                        <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                            <span class="text-xs font-bold text-amber-400 flex items-center gap-2"><img src="/ai/assets/ai-providers/claude.svg" class="w-3.5 h-3.5 invert"> Claude 3.5</span>
+                            <span class="vsh-badge-live">LIVE</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-relaxed font-mono">"Here is the clean TypeScript interface definition with strict types..."</p>
+                    </div>
+
+                    <div class="vsh-glass-card p-4">
+                        <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                            <span class="text-xs font-bold text-blue-400 flex items-center gap-2"><img src="/ai/assets/ai-providers/gemini.svg" class="w-3.5 h-3.5"> Gemini 2.5</span>
+                            <span class="vsh-badge-live">LIVE</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-relaxed font-mono">"Analyzing 2,000,000 token repository context structure..."</p>
+                    </div>
+
+                    <div class="vsh-glass-card p-4">
+                        <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                            <span class="text-xs font-bold text-cyan-400 flex items-center gap-2"><img src="/ai/assets/ai-providers/deepseek.svg" class="w-3.5 h-3.5"> DeepSeek R1</span>
+                            <span class="vsh-badge-live">LIVE</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-relaxed font-mono">"Chain-of-thought: Evaluating mathematical edge cases..."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 IMAGE & VIDEO STUDIO SHOWCASE -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs font-mono uppercase tracking-widest text-magenta-400 bg-pink-500/10 px-3 py-1 rounded border border-pink-500/20">GENERATIVE VISUAL STUDIO</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white mt-4 mb-4">ONE PROMPT. LEADING VISUAL ENGINES.</h2>
+            <p class="text-slate-400 text-sm sm:text-base">Generate photorealistic artwork with FLUX 1.1 Pro, DALL·E 3, Recraft V3, and 1080p cinematic video with Kling 1.5 & Luma.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="vsh-glass-card p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest">IMAGE STUDIO</span>
+                        <span class="vsh-badge-live">LIVE INTEGRATION</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-3">FLUX 1.1 Pro & DALL·E 3</h3>
+                    <p class="text-xs text-slate-300 mb-6 leading-relaxed">
+                        Photorealism, vector graphics, poster layout design, text rendering in image, and custom aspect ratios (1:1, 16:9, 9:16, 21:9).
+                    </p>
+                </div>
+                <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                    <span class="text-xs font-mono text-slate-400">Presets: Photoreal, Design, Vector, Product</span>
+                    <a href="/ai/images" class="vsh-btn-secondary py-2 px-4 text-xs font-mono">OPEN IMAGE STUDIO →</a>
+                </div>
+            </div>
+
+            <div class="vsh-glass-card p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">VIDEO AI STUDIO</span>
+                        <span class="vsh-badge-live">LIVE INTEGRATION</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-3">Kling 1.5 & Luma Dream Machine</h3>
+                    <p class="text-xs text-slate-300 mb-6 leading-relaxed">
+                        Text-to-Video and Image-to-Video camera control, 1080p HD rendering, physical dynamics, and non-blocking job queue processing.
+                    </p>
+                </div>
+                <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                    <span class="text-xs font-mono text-slate-400">Queue Architecture: Queued → Processing → HD</span>
+                    <a href="/ai/video" class="vsh-btn-secondary py-2 px-4 text-xs font-mono">OPEN VIDEO STUDIO →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 06 PRICING SECTION -->
+    <section class="py-24 bg-[#030612] border-t border-white/10 px-4 sm:px-6 lg:px-8" id="pricing">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-xs font-mono uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20">TRANSPARENT COMMERCIAL PASS</span>
+            <h2 class="text-4xl sm:text-6xl font-extrabold font-display text-white mt-4 mb-4">
+                €65 / YEAR
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base mb-8">
+                Billed €65 annually (€5.42/month equivalent math display). Access leading LLMs, reasoning models, image generators, research mode, and code tools in one workspace.
+            </p>
+
+            <div class="vsh-glass-card p-8 sm:p-12 mb-10 text-left relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8 pb-8 border-b border-white/10">
+                    <div>
+                        <span class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">VALUESTREAMHUB AI PASS</span>
+                        <h3 class="text-3xl font-extrabold text-white font-display mt-1">ALL-IN-ONE ANNUAL</h3>
+                        <p class="text-xs text-slate-400 mt-2">12-Month Unlimited Workspace Access • Subject to Fair-Use Limits</p>
+                    </div>
+                    <div class="text-right sm:text-right">
+                        <div class="text-4xl font-extrabold text-white font-display">€65 <span class="text-sm font-normal text-slate-400">/ YEAR</span></div>
+                        <div class="text-xs font-mono text-emerald-400 mt-1">€5.42/mo equivalent</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-slate-200 mb-8">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> OpenAI GPT-4o & o3-mini Reasoning</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Anthropic Claude 3.5 Sonnet & Haiku</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Google Gemini 2.5 Pro (2M Context)</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> DeepSeek R1 & DeepSeek V3 MoE</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> xAI Grok 3 Real-time Search</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> FLUX 1.1 Pro & DALL·E 3 Image Studio</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Kling 1.5 & Luma Video AI Studio</div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> PDF/DOCX/CSV Document Intelligence</div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <a href="https://paypal.me/valuestreamhubstore/65EUR" target="_blank" rel="noopener" class="vsh-btn-primary w-full sm:flex-1 py-4 text-center text-sm font-bold uppercase tracking-wider">
+                        PAY €65 ANNUALLY WITH PAYPAL →
+                    </a>
+                    <a href="/ai/activate" class="vsh-btn-secondary w-full sm:w-auto py-4 px-6 text-center text-xs font-mono">
+                        I'VE PAID — ACTIVATE ACCOUNT
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07 FREQUENTLY ASKED QUESTIONS -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold font-display text-white text-center mb-12">FREQUENTLY ASKED QUESTIONS</h2>
+        <div class="space-y-4">
+            <details class="vsh-glass-card p-5 group">
+                <summary class="font-bold text-slate-100 text-sm cursor-pointer flex justify-between items-center">
+                    What AI models are included in the €65/year plan?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                    You get access to all LIVE models listed in our Model Registry, including OpenAI (GPT-4o, o3-mini, GPT-4o-mini), Anthropic (Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus), Google (Gemini 2.5 Pro, Gemini 2.5 Flash), DeepSeek (R1, V3), xAI (Grok 3), Mistral (Large 2, Codestral), Meta Llama 3.3, Cohere Command R+, FLUX 1.1 Pro Ultra, DALL·E 3, and Kling 1.5 Video.
+                </p>
+            </details>
+
+            <details class="vsh-glass-card p-5 group">
+                <summary class="font-bold text-slate-100 text-sm cursor-pointer flex justify-between items-center">
+                    How does account activation work after PayPal payment?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                    After completing payment on PayPal.me/valuestreamhubstore/65EUR, navigate to <a href="/ai/activate" class="text-cyan-400 underline">/ai/activate</a> and submit your email address along with your PayPal Transaction ID or reference note. Our activation team verifies the transfer and activates your annual workspace within minutes.
+                </p>
+            </details>
+
+            <details class="vsh-glass-card p-5 group">
+                <summary class="font-bold text-slate-100 text-sm cursor-pointer flex justify-between items-center">
+                    What is the Fair-Use Policy?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                    To prevent automated bot abuse and ensure high-speed performance for all human subscribers, annual accounts include a generous 120,000 internal credit allowance per year. Fast models consume low credits (0.2-1.0 credits/query), heavy reasoning models consume 1.2-3.0 credits, image generations consume 150-200 credits, and HD video jobs consume 500-1000 credits. 99% of normal human users never exceed these limits.
+                </p>
+            </details>
+
+            <details class="vsh-glass-card p-5 group">
+                <summary class="font-bold text-slate-100 text-sm cursor-pointer flex justify-between items-center">
+                    Is ValueStreamHub AI an official partner of OpenAI or Anthropic?
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                    ValueStreamHub AI is an independent multi-provider interface that connects to official developer API endpoints. All provider names, logos, and trademarks belong to their respective owners.
+                </p>
+            </details>
+        </div>
+    </section>
+
+    <!-- 08 FINAL CTA -->
+    <section class="py-24 bg-gradient-to-b from-[#040711] to-[#010206] text-center border-t border-white/10 px-4">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl sm:text-6xl font-extrabold font-display text-white mb-6">
+                STOP JUMPING<br>
+                <span class="vsh-text-gradient-cyan">BETWEEN AI TOOLS.</span>
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base mb-10">
+                Chat. Research. Code. Generate images. Synthesize video. Compare models. One workspace for €65/year.
+            </p>
+            <a href="https://paypal.me/valuestreamhubstore/65EUR" target="_blank" rel="noopener" class="vsh-btn-primary py-4 px-10 text-sm uppercase tracking-wider inline-block">
+                GET VALUESTREAMHUB AI — €65 / YEAR
+            </a>
+            <p class="text-[11px] font-mono text-slate-500 mt-4">Annual access • Fair-use policy applies</p>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="vsh-ai-footer"></div>
+
+    <script src="/ai/assets/js/constellation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('vsh-featured-models-grid');
+            if (!grid || typeof MODEL_REGISTRY === 'undefined') return;
+
+            const featured = MODEL_REGISTRY.filter(m => m.availability === 'LIVE').slice(0, 6);
+            grid.innerHTML = featured.map(m => `
+                <div class="vsh-glass-card p-6 flex flex-col justify-between" onclick="window.location.href='/ai/chat?model=${m.id}'">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <img src="${m.icon}" class="w-5 h-5 ${m.provider === 'OpenAI' || m.provider === 'Anthropic' || m.provider === 'xAI' ? 'invert' : ''}" alt="${m.provider}">
+                                <span class="text-xs font-mono font-bold text-white">${m.provider}</span>
+                            </div>
+                            <span class="vsh-badge-live">${m.availability}</span>
+                        </div>
+                        <h3 class="text-lg font-bold font-display text-white mb-2">${m.displayName}</h3>
+                        <p class="text-xs text-slate-400 mb-4 line-clamp-2">${m.description}</p>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            ${m.capabilities.slice(0, 3).map(c => `<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">${c}</span>`).join('')}
+                        </div>
+                        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 pt-3 border-t border-white/10">
+                            <span>Ctx: ${m.contextWindow ? (m.contextWindow / 1000) + 'k' : 'N/A'}</span>
+                            <span class="text-cyan-400">Launch Chat →</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+</html>

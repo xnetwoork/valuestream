@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="dark min-h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation — ValueStreamHub AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ai/assets/css/ai-core.css">
+    <script src="/ai/assets/js/model-registry.js"></script>
+    <script src="/ai/assets/js/usage-engine.js"></script>
+    <script src="/ai/assets/js/ai-nav.js" defer></script>
+</head>
+<body class="vsh-ai-theme bg-[#040711] text-slate-100 min-h-full flex flex-col antialiased">
+    <div id="vsh-ai-header"></div>
+
+    <main class="flex-1 max-w-xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center">
+        
+        <div id="vsh-activation-card" class="w-full glass-card p-8 rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl relative">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h1 class="text-2xl font-black text-white">Activate Your ValueStreamHub AI Pass</h1>
+                <p class="text-xs font-mono text-slate-400 mt-1">Enter your PayPal receipt details below for instant account provisioning.</p>
+            </div>
+
+            <!-- ACTIVATION FORM -->
+            <form id="vsh-activate-form" class="space-y-4 font-sans text-xs">
+                <div>
+                    <label class="block text-slate-300 font-mono uppercase text-[11px] mb-1">Account Email Address</label>
+                    <input type="email" id="vsh-user-email" required class="w-full bg-[#030612] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500" placeholder="your.email@example.com">
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-mono uppercase text-[11px] mb-1">PayPal Transaction ID or PayPal Email</label>
+                    <input type="text" id="vsh-paypal-ref" required class="w-full bg-[#030612] border border-white/15 rounded-xl px-4 py-3 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-cyan-500" placeholder="E.g., 9XY8492048123 or paypal@user.com">
+                    <span class="text-[10px] text-slate-500 mt-1 block">Found on your PayPal payment confirmation email or receipt.</span>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-mono uppercase text-[11px] mb-1">Create Account Password / PIN</label>
+                    <input type="password" id="vsh-user-pin" required minlength="4" class="w-full bg-[#030612] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500" placeholder="••••••••">
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between font-mono text-[11px]">
+                    <span class="text-slate-400">Selected Plan:</span>
+                    <span class="text-cyan-400 font-bold">€65 / YEAR Pass (120k Credits)</span>
+                </div>
+
+                <button type="submit" id="vsh-submit-activate-btn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-mono text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition-all mt-4">
+                    <i class="fa-solid fa-bolt"></i> VERIFY & ACTIVATE WORKSPACE
+                </button>
+            </form>
+
+            <div class="mt-6 border-t border-white/10 pt-4 text-center">
+                <p class="text-[11px] text-slate-400">
+                    Haven't paid yet? <a href="https://paypal.me/valuestreamhubstore/65EUR" target="_blank" class="text-cyan-400 underline font-bold">Pay €65/Year via PayPal here</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- PROGRESS / SUCCESS SCREEN (HIDDEN INITIALLY) -->
+        <div id="vsh-success-card" class="hidden w-full glass-card p-8 rounded-3xl border border-emerald-500/30 bg-emerald-950/20 text-center space-y-4">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-3xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-white">Account Successfully Activated!</h2>
+            <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                Welcome to ValueStreamHub AI. Your <strong>120,000 Annual AI Credits</strong> have been provisioned and linked to your workspace email.
+            </p>
+
+            <div class="p-4 rounded-xl bg-[#030612] border border-emerald-500/30 text-left font-mono text-xs space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Account:</span>
+                    <span id="vsh-success-email" class="text-emerald-300 font-bold">user@example.com</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Transaction Ref:</span>
+                    <span id="vsh-success-ref" class="text-slate-200">PP-19283719</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Credit Ledger:</span>
+                    <span class="text-cyan-400 font-bold">120,000 / 120,000 LIVE</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">API Gateway Key:</span>
+                    <span class="text-purple-300">vsh_live_891f...90a</span>
+                </div>
+            </div>
+
+            <a href="/ai/chat" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all">
+                LAUNCH UNIFIED AI CHAT <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <div id="vsh-ai-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('vsh-activate-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('vsh-user-email').value.trim();
+                const ref = document.getElementById('vsh-paypal-ref').value.trim();
+                const submitBtn = document.getElementById('vsh-submit-activate-btn');
+
+                if (!email || !ref) return;
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> VERIFYING PAYPAL LEDGER...`;
+
+                setTimeout(() => {
+                    // Update LocalStorage user state
+                    localStorage.setItem('vsh_user_active', 'true');
+                    localStorage.setItem('vsh_user_email', email);
+                    localStorage.setItem('vsh_user_ref', ref);
+
+                    document.getElementById('vsh-activation-card').classList.add('hidden');
+                    document.getElementById('vsh-success-email').textContent = email;
+                    document.getElementById('vsh-success-ref').textContent = ref;
+                    document.getElementById('vsh-success-card').classList.remove('hidden');
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
