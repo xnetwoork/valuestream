@@ -1,0 +1,23 @@
+{
+  "name": "VALUE HUB المغرب — متجر السوبرفود والعناية",
+  "short_name": "VALUE HUB",
+  "description": "متجر السوبرفود والمكملات الغذائية في المغرب مع باكات 189 درهم والدفع عند الاستلام.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAF7",
+  "theme_color": "#0B7A53",
+  "dir": "rtl",
+  "lang": "ar-MA",
+  "icons": [
+    {
+      "src": "/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

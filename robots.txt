@@ -1,0 +1,22 @@
+# ==============================================================================
+# VALUE HUB STORE — Robots Exclusion Policy
+# Canonical Host: https://value-hub.store
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /packs/
+Allow: /shop/
+Allow: /guides/
+Allow: /delivery/
+Allow: /assets/
+
+# Block faceted search explosion & query duplicates
+Disallow: /*?*q=
+Disallow: /*?*filter=
+Disallow: /admin/
+Disallow: /api/
+Disallow: /extracted_v2/
+
+# Sitemaps
+Sitemap: https://value-hub.store/sitemap.xml
