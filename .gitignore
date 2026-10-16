@@ -5,3 +5,5 @@ ai/assets/generate_providers.py
 .DS_Store
 *.log
 extracted_v2/
+all-in-one/
+
