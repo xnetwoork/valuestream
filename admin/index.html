@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ValueStreamHub CRM & Revenue Cockpit</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/assets/js/crm.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #030712; }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Top Navigation -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-white text-base tracking-wider">VALUE<span class="text-cyan-400">STREAM</span></span>
+                    <span class="text-xs px-2 py-0.5 rounded bg-indigo-950 border border-indigo-700 text-indigo-300 ml-2 font-mono">CRM COCKPIT</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <a href="/" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Storefront
+                </a>
+                <a href="/AI1year/" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-brain"></i> AI Silo
+                </a>
+                <button onclick="exportAllJSON()" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center gap-1.5 shadow transition">
+                    <i class="fa-solid fa-download"></i> Export JSON
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 shadow">
+                <div class="text-xs font-mono uppercase text-slate-400 mb-1">Total 12H Trials</div>
+                <div class="text-3xl font-extrabold text-emerald-400" id="kpi-trials">0</div>
+                <div class="text-[11px] text-slate-500 mt-1">Free test tickets generated</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 shadow">
+                <div class="text-xs font-mono uppercase text-slate-400 mb-1">Order Intents</div>
+                <div class="text-3xl font-extrabold text-cyan-400" id="kpi-orders">0</div>
+                <div class="text-[11px] text-slate-500 mt-1">PayPal checkout initiations</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 shadow">
+                <div class="text-xs font-mono uppercase text-slate-400 mb-1">Pipeline Volume (€)</div>
+                <div class="text-3xl font-extrabold text-amber-400" id="kpi-volume">€0</div>
+                <div class="text-[11px] text-slate-500 mt-1">Total gross intent value</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 shadow">
+                <div class="text-xs font-mono uppercase text-slate-400 mb-1">Top Attribution Source</div>
+                <div class="text-2xl font-bold text-indigo-400 truncate" id="kpi-source">—</div>
+                <div class="text-[11px] text-slate-500 mt-1" id="kpi-campaign">Last campaign touch</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3 mb-6">
+            <button id="tab-btn-trials" onclick="switchTab('trials')" class="px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold text-sm transition">
+                <i class="fa-solid fa-ticket mr-1.5"></i> 12H Free Trials (<span id="badge-trials">0</span>)
+            </button>
+            <button id="tab-btn-orders" onclick="switchTab('orders')" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white border border-slate-700 font-bold text-sm transition">
+                <i class="fa-solid fa-cart-shopping mr-1.5"></i> Paid Pass Orders (<span id="badge-orders">0</span>)
+            </button>
+            <div class="ml-auto flex items-center gap-2">
+                <input type="text" id="crm-search" placeholder="Search customer, ID, phone..." oninput="renderTables()" class="px-3.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 w-56">
+                <button onclick="downloadCSV()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                    <i class="fa-solid fa-file-csv mr-1"></i> CSV
+                </button>
+            </div>
+        </div>
+
+        <!-- Section 1: Trials Table -->
+        <div id="section-trials" class="space-y-4">
+            <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 shadow">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-950/80 text-slate-400 uppercase font-mono border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Ticket ID</th>
+                            <th class="py-3 px-4">Customer</th>
+                            <th class="py-3 px-4">WhatsApp</th>
+                            <th class="py-3 px-4">Device</th>
+                            <th class="py-3 px-4">Attribution</th>
+                            <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trials-tbody" class="divide-y divide-slate-800 text-slate-300">
+                        <!-- Rendered via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2: Orders Table -->
+        <div id="section-orders" class="space-y-4 hidden">
+            <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 shadow">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-950/80 text-slate-400 uppercase font-mono border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-4">Order ID</th>
+                            <th class="py-3 px-4">Customer</th>
+                            <th class="py-3 px-4">Plan & Amount</th>
+                            <th class="py-3 px-4">WhatsApp</th>
+                            <th class="py-3 px-4">Device</th>
+                            <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody" class="divide-y divide-slate-800 text-slate-300">
+                        <!-- Rendered via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500 font-mono">
+        ValueStreamHub Sovereign Local CRM • Zero Cloud Exposure • Private Local Storage Database
+    </footer>
+
+    <script>
+        let currentTab = 'trials';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const btnT = document.getElementById('tab-btn-trials');
+            const btnO = document.getElementById('tab-btn-orders');
+            const secT = document.getElementById('section-trials');
+            const secO = document.getElementById('section-orders');
+
+            if (tab === 'trials') {
+                btnT.className = 'px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold text-sm transition';
+                btnO.className = 'px-4 py-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white border border-slate-700 font-bold text-sm transition';
+                secT.classList.remove('hidden');
+                secO.classList.add('hidden');
+            } else {
+                btnO.className = 'px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold text-sm transition';
+                btnT.className = 'px-4 py-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white border border-slate-700 font-bold text-sm transition';
+                secO.classList.remove('hidden');
+                secT.classList.add('hidden');
+            }
+            renderTables();
+        }
+
+        function loadData() {
+            const trials = window.VSH_CRM.getAllTrials();
+            const orders = window.VSH_CRM.getAllOrders();
+            const attr = window.VSH_CRM.getAttribution();
+
+            document.getElementById('kpi-trials').textContent = trials.length;
+            document.getElementById('badge-trials').textContent = trials.length;
+
+            document.getElementById('kpi-orders').textContent = orders.length;
+            document.getElementById('badge-orders').textContent = orders.length;
+
+            const totalVol = orders.reduce((sum, o) => sum + (Number(o.amount_eur) || 0), 0);
+            document.getElementById('kpi-volume').textContent = '€' + totalVol;
+
+            const source = (attr.last_touch && attr.last_touch.source) || 'Direct';
+            const campaign = (attr.last_touch && attr.last_touch.campaign) || 'None';
+            document.getElementById('kpi-source').textContent = source.toUpperCase();
+            document.getElementById('kpi-campaign').textContent = 'Campaign: ' + campaign;
+
+            renderTables();
+        }
+
+        function renderTables() {
+            const query = (document.getElementById('crm-search').value || '').toLowerCase();
+            const trials = window.VSH_CRM.getAllTrials();
+            const orders = window.VSH_CRM.getAllOrders();
+
+            // Render Trials
+            const tBody = document.getElementById('trials-tbody');
+            const filteredTrials = trials.filter(t => 
+                (t.id && t.id.toLowerCase().includes(query)) ||
+                (t.customer_name && t.customer_name.toLowerCase().includes(query)) ||
+                (t.whatsapp && t.whatsapp.toLowerCase().includes(query)) ||
+                (t.device && t.device.toLowerCase().includes(query))
+            );
+
+            if (!filteredTrials.length) {
+                tBody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 italic">No trial requests recorded yet. Clicks on "Free 12H Test" will automatically appear here.</td></tr>`;
+            } else {
+                tBody.innerHTML = filteredTrials.map(t => `
+                    <tr class="hover:bg-slate-800/40 transition">
+                        <td class="py-3 px-4 font-mono text-cyan-300 font-bold">${t.id}</td>
+                        <td class="py-3 px-4 font-semibold text-white">${t.customer_name}</td>
+                        <td class="py-3 px-4 font-mono text-emerald-400">${t.whatsapp || '—'}</td>
+                        <td class="py-3 px-4 text-slate-400">${t.device || 'Smart TV'}</td>
+                        <td class="py-3 px-4 text-slate-400 font-mono text-[11px]">${t.source || 'direct'} / ${t.campaign || 'std'}</td>
+                        <td class="py-3 px-4">
+                            <select onchange="updateTrialStatus('${t.id}', this.value)" class="bg-slate-950 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+                                <option value="NEW_REQUEST" ${t.status === 'NEW_REQUEST' ? 'selected' : ''}>NEW</option>
+                                <option value="CODE_SENT" ${t.status === 'CODE_SENT' ? 'selected' : ''}>CODE SENT</option>
+                                <option value="ACTIVE_TEST" ${t.status === 'ACTIVE_TEST' ? 'selected' : ''}>ACTIVE</option>
+                                <option value="CONVERTED" ${t.status === 'CONVERTED' ? 'selected' : ''}>CONVERTED</option>
+                                <option value="EXPIRED" ${t.status === 'EXPIRED' ? 'selected' : ''}>EXPIRED</option>
+                            </select>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <a href="https://wa.me/${(t.whatsapp || '212638070903').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello ' + (t.customer_name !== 'Anonymous Prospect' ? t.customer_name : 'there') + '! Value Stream Hub VIP Support here regarding your 12-Hour Free Test [Ticket: ' + t.id + ']. Are you ready for your test code?')}" target="_blank" class="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500 hover:text-slate-950 text-emerald-300 font-bold transition">
+                                <i class="fa-brands fa-whatsapp"></i> Chat
+                            </a>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Render Orders
+            const oBody = document.getElementById('orders-tbody');
+            const filteredOrders = orders.filter(o => 
+                (o.id && o.id.toLowerCase().includes(query)) ||
+                (o.customer_name && o.customer_name.toLowerCase().includes(query)) ||
+                (o.whatsapp && o.whatsapp.toLowerCase().includes(query)) ||
+                (o.plan_title && o.plan_title.toLowerCase().includes(query))
+            );
+
+            if (!filteredOrders.length) {
+                oBody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 italic">No pass order intents recorded yet. Customer checkout clicks will appear here.</td></tr>`;
+            } else {
+                oBody.innerHTML = filteredOrders.map(o => `
+                    <tr class="hover:bg-slate-800/40 transition">
+                        <td class="py-3 px-4 font-mono text-cyan-300 font-bold">${o.id}</td>
+                        <td class="py-3 px-4 font-semibold text-white">${o.customer_name}</td>
+                        <td class="py-3 px-4">
+                            <span class="font-bold text-amber-300">€${o.amount_eur}</span> 
+                            <span class="text-slate-400 text-[11px]">(${o.plan_title})</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-emerald-400">${o.whatsapp || '—'}</td>
+                        <td class="py-3 px-4 text-slate-400">${o.device || 'Standard Setup'}</td>
+                        <td class="py-3 px-4">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-slate-950 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+                                <option value="PENDING_PAYPAL" ${o.status === 'PENDING_PAYPAL' ? 'selected' : ''}>PENDING</option>
+                                <option value="PAYMENT_RECEIVED" ${o.status === 'PAYMENT_RECEIVED' ? 'selected' : ''}>PAID</option>
+                                <option value="ACCOUNT_ACTIVATED" ${o.status === 'ACCOUNT_ACTIVATED' ? 'selected' : ''}>ACTIVATED</option>
+                                <option value="RENEWAL_DUE" ${o.status === 'RENEWAL_DUE' ? 'selected' : ''}>RENEWAL</option>
+                            </select>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <a href="https://wa.me/${(o.whatsapp || '212638070903').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello ' + (o.customer_name !== 'Anonymous Buyer' ? o.customer_name : 'there') + '! Value Stream Hub VIP Support here regarding your pass activation [Order: ' + o.id + ' - ' + o.plan_title + ']. We have received your order confirmation!')}" target="_blank" class="px-2.5 py-1 rounded bg-cyan-500/20 hover:bg-cyan-500 hover:text-slate-950 text-cyan-300 font-bold transition">
+                                <i class="fa-brands fa-whatsapp"></i> Activate
+                            </a>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function updateTrialStatus(id, status) {
+            window.VSH_CRM.updateTrialStatus(id, status);
+            loadData();
+        }
+
+        function updateOrderStatus(id, status) {
+            window.VSH_CRM.updateOrderStatus(id, status);
+            loadData();
+        }
+
+        function downloadCSV() {
+            const csv = window.VSH_CRM.exportCSV(currentTab);
+            if (!csv) { alert('No data to export.'); return; }
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `valuestream_${currentTab}_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+        }
+
+        function exportAllJSON() {
+            const json = window.VSH_CRM.exportJSON();
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `valuestream_crm_full_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>

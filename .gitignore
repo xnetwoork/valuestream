@@ -6,4 +6,6 @@ ai/assets/generate_providers.py
 *.log
 extracted_v2/
 all-in-one/
-
+index_live.html
+AI1year_live.html
+scripts/

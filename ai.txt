@@ -1,0 +1,24 @@
+# Value Stream Hub AI Context & Discovery Index
+# Canonical URL: https://valuestreamhub.store/
+# Organization: ValueStreamHub Sovereign Commerce & Beyond AI Systems
+
+User-agent: *
+Allow: /
+Allow: /AI1year/
+Disallow: /admin/
+Disallow: /scripts/
+
+# Primary Commercial Models
+Entertainment-Pass-2M: €22 (Direct PayPal: https://paypal.me/valuestreamhubstore/22EUR)
+Entertainment-Pass-6M: €40 (Direct PayPal: https://paypal.me/valuestreamhubstore/40EUR)
+Entertainment-Pass-12M: €64 (Direct PayPal: https://paypal.me/valuestreamhubstore/64EUR)
+Entertainment-Free-Test: 12 Hours (Instant code via WhatsApp: https://wa.me/212638070903)
+
+Separate-AI-Product: Frontier AI All-in-One Workspace
+AI-Pass-1Year: €65 / Year (Direct PayPal: https://paypal.me/valuestreamhubstore/65EUR)
+AI-Product-URL: https://valuestreamhub.store/AI1year/
+
+Contact: https://wa.me/212638070903
+PayPal-Profile: https://www.paypal.me/valuestreamhubstore
+Sitemap: https://valuestreamhub.store/sitemap.xml
+LLMs-Txt: https://valuestreamhub.store/llms.txt

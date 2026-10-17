@@ -1,22 +1,47 @@
 # ==============================================================================
-# VALUE HUB STORE — Robots Exclusion Policy
-# Canonical Host: https://value-hub.store
+# VALUESTREAMHUB.STORE — Robots Exclusion Policy
+# Canonical Host: https://valuestreamhub.store
 # ==============================================================================
 
 User-agent: *
 Allow: /
-Allow: /packs/
-Allow: /shop/
-Allow: /guides/
-Allow: /delivery/
+Allow: /AI1year/
 Allow: /assets/
 
-# Block faceted search explosion & query duplicates
+# Disallow internal admin, query parameter noise, and private directories
+Disallow: /admin/
 Disallow: /*?*q=
 Disallow: /*?*filter=
-Disallow: /admin/
-Disallow: /api/
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
 Disallow: /extracted_v2/
+Disallow: /scripts/
 
-# Sitemaps
-Sitemap: https://value-hub.store/sitemap.xml
+# AI Discovery & LLM Agent Directives
+User-agent: GPTBot
+Allow: /
+Allow: /AI1year/
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /AI1year/
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /AI1year/
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /AI1year/
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+Allow: /AI1year/
+Disallow: /admin/
+
+# Sitemaps & Feeds
+Sitemap: https://valuestreamhub.store/sitemap.xml
